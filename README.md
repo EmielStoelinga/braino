@@ -1,2 +1,2 @@
-# brainogotchi
-Brainogotchi Android App
+# braino
+Braino Android App
