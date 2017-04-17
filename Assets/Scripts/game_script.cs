@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class game_script : MonoBehaviour {
 	public Button puzzle;
@@ -18,12 +19,15 @@ public class game_script : MonoBehaviour {
 	private int score3 = 100;
 	private int score4 = 100;
 
+	private Scene active;
+
 	private float timer = 1;
 	void Start () {
 		puzzle.onClick.AddListener(Puzzle);
 		rhythm.onClick.AddListener(Rhythm);
 		run.onClick.AddListener(Run);
 		social.onClick.AddListener(Social);
+		DontDestroyOnLoad (transform.gameObject);
 	}
 
 	void OnGUI() {
@@ -50,6 +54,7 @@ public class game_script : MonoBehaviour {
 
 	void Puzzle () {
 		Debug.Log ("Clicked puzzle");
+		//SceneManager.LoadScene ("Puzzlescene", LoadSceneMode.Additive);
 		score1 += 20;
 	}
 
