@@ -14,20 +14,25 @@ public class game_script : MonoBehaviour {
 	public Text text3;
 	public Text text4;
 
+	public GameObject UIcanvas;
+
 	private int score1 = 100;
 	private int score2 = 100;
 	private int score3 = 100;
 	private int score4 = 100;
 
 	private Scene active;
+	private bool goBack = false;
 
 	private float timer = 1;
 	void Start () {
+		Screen.orientation = ScreenOrientation.Portrait;
 		puzzle.onClick.AddListener(Puzzle);
 		rhythm.onClick.AddListener(Rhythm);
 		run.onClick.AddListener(Run);
 		social.onClick.AddListener(Social);
 		DontDestroyOnLoad (transform.gameObject);
+		active = SceneManager.GetSceneByName("test");
 	}
 
 	void OnGUI() {
@@ -50,26 +55,51 @@ public class game_script : MonoBehaviour {
 		score2 = Mathf.Clamp(score2, 0, 100);
 		score3 = Mathf.Clamp(score3, 0, 100);
 		score4 = Mathf.Clamp(score4, 0, 100);
+
+		if (Input.GetKeyDown("escape")) {
+			Back ();
+		}
+	}
+
+	void LateUpdate() {
+		if (goBack) {
+			goBack = false;
+			UIcanvas.SetActive (true);
+			SceneManager.UnloadScene(active);
+			active = SceneManager.GetSceneByName("test");
+		}
 	}
 
 	void Puzzle () {
 		Debug.Log ("Clicked puzzle");
-		//SceneManager.LoadScene ("Puzzlescene", LoadSceneMode.Additive);
-		score1 += 20;
+		SceneManager.LoadScene ("Puzzlescene", LoadSceneMode.Additive);
+		active = SceneManager.GetSceneByName("Puzzlescene");
+		UIcanvas.SetActive (false);
 	}
 
 	void Rhythm () {
 		Debug.Log ("Clicked rhythm");
-		score2 += 20;
+		SceneManager.LoadScene ("Rythmscene", LoadSceneMode.Additive);
+		active = SceneManager.GetSceneByName("Rythmscene");
+		UIcanvas.SetActive (false);
 	}
 
 	void Run () {
 		Debug.Log ("Clicked run");
-		score3 += 20;
+		SceneManager.LoadScene ("Runscene", LoadSceneMode.Additive);
+		active = SceneManager.GetSceneByName("Runscene");
+		UIcanvas.SetActive (false);
 	}
 
 	void Social () {
 		Debug.Log ("Clicked social");
-		score4 += 20;
+		SceneManager.LoadScene ("Socialscene", LoadSceneMode.Additive);
+		active = SceneManager.GetSceneByName("Socialscene");
+		UIcanvas.SetActive (false);
+	}
+
+	public void Back () {
+		Debug.Log ("Back");
+		goBack = true;
 	}
 }
