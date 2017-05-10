@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class game_script : MonoBehaviour {
 	public Button puzzle;
-	public Button rhythm;
+	public Button rsi;
 	public Button run;
 	public Button social;
 
-	public Text text1;
-	public Text text2;
-	public Text text3;
-	public Text text4;
+	public Slider scorebar1;
+	public Slider scorebar2;
+	public Slider scorebar3;
+	public Slider scorebar4;
 
 	public GameObject UIcanvas;
 
@@ -28,18 +28,27 @@ public class game_script : MonoBehaviour {
 	void Start () {
 		Screen.orientation = ScreenOrientation.Portrait;
 		puzzle.onClick.AddListener(Puzzle);
-		rhythm.onClick.AddListener(Rhythm);
+		rsi.onClick.AddListener(RSI);
 		run.onClick.AddListener(Run);
 		social.onClick.AddListener(Social);
 		DontDestroyOnLoad (transform.gameObject);
 		active = SceneManager.GetSceneByName("test");
+		scorebar1.maxValue = 100;
+		scorebar2.maxValue = 100;
+		scorebar3.maxValue = 100;
+		scorebar4.maxValue = 100;
 	}
 
 	void OnGUI() {
-		text1.text = score1.ToString();
-		text2.text = score2.ToString();
-		text3.text = score3.ToString();
-		text4.text = score4.ToString();
+		scorebar1.value = score1;
+		scorebar2.value = score2;
+		scorebar3.value = score3;
+		scorebar4.value = score4;
+
+		scorebar1.transform.Find("Fill Area").GetComponentInChildren<Image>().color = Color.Lerp(Color.red, Color.green, (float)score1/100f);
+		scorebar2.transform.Find("Fill Area").GetComponentInChildren<Image>().color = Color.Lerp(Color.red, Color.green, (float)score2/100f);
+		scorebar3.transform.Find("Fill Area").GetComponentInChildren<Image>().color = Color.Lerp(Color.red, Color.green, (float)score3/100f);
+		scorebar4.transform.Find("Fill Area").GetComponentInChildren<Image>().color = Color.Lerp(Color.red, Color.green, (float)score4/100f);
 	}
 
 	void Update () {
@@ -77,10 +86,10 @@ public class game_script : MonoBehaviour {
 		UIcanvas.SetActive (false);
 	}
 
-	void Rhythm () {
-		Debug.Log ("Clicked rhythm");
-		SceneManager.LoadScene ("Rythmscene", LoadSceneMode.Additive);
-		active = SceneManager.GetSceneByName("Rythmscene");
+	void RSI () {
+		Debug.Log ("Clicked RSI");
+		SceneManager.LoadScene ("RSIscene", LoadSceneMode.Additive);
+		active = SceneManager.GetSceneByName("RSIscene");
 		UIcanvas.SetActive (false);
 	}
 
@@ -104,7 +113,7 @@ public class game_script : MonoBehaviour {
 
 		if (active == SceneManager.GetSceneByName("Puzzlescene")) {
 			score1 += (int)score;
-		} else if (active == SceneManager.GetSceneByName("Rythmscene")) {
+		} else if (active == SceneManager.GetSceneByName("RSIscene")) {
 			score2 += (int)score;
 		} else if (active == SceneManager.GetSceneByName("Runscene")) {
 			score3 += (int)score;
