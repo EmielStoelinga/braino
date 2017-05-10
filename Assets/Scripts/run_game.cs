@@ -25,19 +25,20 @@ public class run_game : MonoBehaviour {
 		camh = Camera.main.orthographicSize;
 		camw = camh * Camera.main.aspect;
 		Physics.gravity = new Vector3 (0, -grav, 0);
+		Instantiate (obstacle);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		blocktime += Time.deltaTime;
 		if (Random.Range (0, 100) <= chance && obstacles.Count < maxobstacles && blocktime > mintime) {
-			obstacles.Add(Instantiate (obstacle));
+			obstacles.Add( Instantiate (obstacle));
 			blocktime = 0;
 		}
 
 		foreach(GameObject t in obstacles) {
 			t.transform.Translate (new Vector3(-speed, 0, 0));
-			if (Mathf.Abs (t.transform.position.x) > camw) {
+			if (t.transform.position.x < -camw) {
 				removes.Add(t);
 			}
 		}

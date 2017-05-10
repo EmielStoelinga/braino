@@ -5,6 +5,7 @@ public class run_controller : MonoBehaviour {
 	private Rigidbody rb;
 	private float jumpSpeed = 1000;
 	private bool canJump = false;
+	private float time = 0;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody>();
@@ -19,11 +20,13 @@ public class run_controller : MonoBehaviour {
 				canJump = false;
 			}
 		}
+
+		time += Time.deltaTime;
 	}
 
 	void OnCollisionEnter(Collision col) {
 		if (col.gameObject.tag == "Obstacle") {
-			GameObject.Find ("Game").GetComponent<game_script> ().Back ();
+			GameObject.Find ("Game").GetComponent<game_script> ().Back (time);
 		} else if (col.gameObject.tag == "Ground") {
 			canJump = true;
 		}

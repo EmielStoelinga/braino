@@ -57,7 +57,7 @@ public class game_script : MonoBehaviour {
 		score4 = Mathf.Clamp(score4, 0, 100);
 
 		if (Input.GetKeyDown("escape")) {
-			Back ();
+			Back (0);
 		}
 	}
 
@@ -98,8 +98,18 @@ public class game_script : MonoBehaviour {
 		UIcanvas.SetActive (false);
 	}
 
-	public void Back () {
+	public void Back (float score) {
 		Debug.Log ("Back");
 		goBack = true;
+
+		if (active == SceneManager.GetSceneByName("Puzzlescene")) {
+			score1 += (int)score;
+		} else if (active == SceneManager.GetSceneByName("Rythmscene")) {
+			score2 += (int)score;
+		} else if (active == SceneManager.GetSceneByName("Runscene")) {
+			score3 += (int)score;
+		} else if (active == SceneManager.GetSceneByName("Socialscene")) {
+			score4 += (int)score;
+		}
 	}
 }
