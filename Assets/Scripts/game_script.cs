@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class game_script : MonoBehaviour {
@@ -14,8 +15,6 @@ public class game_script : MonoBehaviour {
 	public Slider scorebar3;
 	public Slider scorebar4;
 
-	public GameObject UIcanvas;
-
 	private int score1 = 100;
 	private int score2 = 100;
 	private int score3 = 100;
@@ -23,6 +22,12 @@ public class game_script : MonoBehaviour {
 
 	private Scene active;
 	private bool goBack = false;
+
+	private ModalPanel modalPanel;
+	public GameObject UIPanelObject;
+
+	private UnityAction backAction;
+	private UnityAction cancelAction;
 
 	private float timer = 1;
 	void Start () {
@@ -37,6 +42,13 @@ public class game_script : MonoBehaviour {
 		scorebar2.maxValue = 100;
 		scorebar3.maxValue = 100;
 		scorebar4.maxValue = 100;
+	}
+
+	void Awake () {
+		modalPanel = ModalPanel.Instance ();
+
+		backAction = new UnityAction (BackFunction);
+		cancelAction = new UnityAction (CancelFunction);
 	}
 
 	void OnGUI() {
@@ -66,14 +78,14 @@ public class game_script : MonoBehaviour {
 		score4 = Mathf.Clamp(score4, 0, 100);
 
 		if (Input.GetKeyDown("escape")) {
-			Back (0);
+			modalPanel.Choice ("Do you want to stop?", backAction, cancelAction);
 		}
 	}
 
 	void LateUpdate() {
 		if (goBack) {
 			goBack = false;
-			UIcanvas.SetActive (true);
+			UIPanelObject.SetActive (true);
 			SceneManager.UnloadScene(active);
 			active = SceneManager.GetSceneByName("test");
 		}
@@ -83,28 +95,28 @@ public class game_script : MonoBehaviour {
 		Debug.Log ("Clicked puzzle");
 		SceneManager.LoadScene ("Puzzlescene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Puzzlescene");
-		UIcanvas.SetActive (false);
+		UIPanelObject.SetActive (false);
 	}
 
 	void RSI () {
 		Debug.Log ("Clicked RSI");
 		SceneManager.LoadScene ("RSIscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("RSIscene");
-		UIcanvas.SetActive (false);
+		UIPanelObject.SetActive (false);
 	}
 
 	void Run () {
 		Debug.Log ("Clicked run");
 		SceneManager.LoadScene ("Runscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Runscene");
-		UIcanvas.SetActive (false);
+		UIPanelObject.SetActive (false);
 	}
 
 	void Social () {
 		Debug.Log ("Clicked social");
 		SceneManager.LoadScene ("Socialscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Socialscene");
-		UIcanvas.SetActive (false);
+		UIPanelObject.SetActive (false);
 	}
 
 	public void Back (float score) {
@@ -120,5 +132,13 @@ public class game_script : MonoBehaviour {
 		} else if (active == SceneManager.GetSceneByName("Socialscene")) {
 			score4 += (int)score;
 		}
+	}
+
+	void BackFunction () {
+		Back (0);
+	}
+
+	void CancelFunction () {
+		return;
 	}
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class run_game : MonoBehaviour {
-	private float speed = 0.2f;
+	private float speed = 10.0f;
 	private float grav = 100.0f;
 	private float chance = 1;
 	private int maxobstacles = 4;
@@ -37,7 +37,7 @@ public class run_game : MonoBehaviour {
 		}
 
 		foreach(GameObject t in obstacles) {
-			t.transform.Translate (new Vector3(-speed, 0, 0));
+			t.transform.Translate (new Vector3(-speed * Time.deltaTime, 0, 0));
 			if (t.transform.position.x < -camw) {
 				removes.Add(t);
 			}

@@ -25,6 +25,7 @@ public class run_controller : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision col) {
+		Debug.Log ("collision!");
 		if (col.gameObject.tag == "Obstacle") {
 			GameObject.Find ("Game").GetComponent<game_script> ().Back (time);
 		} else if (col.gameObject.tag == "Ground") {
