@@ -31,7 +31,7 @@ public class game_script : MonoBehaviour {
 
 	private float timer = 1;
 	void Start () {
-		Screen.orientation = ScreenOrientation.Portrait;
+		//Screen.orientation = ScreenOrientation.Portrait;
 		puzzle.onClick.AddListener(Puzzle);
 		rsi.onClick.AddListener(RSI);
 		run.onClick.AddListener(Run);
@@ -107,8 +107,8 @@ public class game_script : MonoBehaviour {
 
 	void Run () {
 		Debug.Log ("Clicked run");
-		SceneManager.LoadScene ("Runscene", LoadSceneMode.Additive);
-		active = SceneManager.GetSceneByName("Runscene");
+		SceneManager.LoadScene ("EmielRunscene", LoadSceneMode.Additive);
+		active = SceneManager.GetSceneByName("EmielRunscene");
 		UIPanelObject.SetActive (false);
 	}
 
@@ -127,7 +127,7 @@ public class game_script : MonoBehaviour {
 			score1 += (int)score;
 		} else if (active == SceneManager.GetSceneByName("RSIscene")) {
 			score2 += (int)score;
-		} else if (active == SceneManager.GetSceneByName("Runscene")) {
+		} else if (active == SceneManager.GetSceneByName("EmielRunscene")) {
 			score3 += (int)score;
 		} else if (active == SceneManager.GetSceneByName("Socialscene")) {
 			score4 += (int)score;
