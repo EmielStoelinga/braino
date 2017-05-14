@@ -40,6 +40,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		Screen.orientation = ScreenOrientation.LandscapeLeft;
+
 		// create the games puzzle tiles from the provided image.
 		CreatePuzzleTiles();
 
