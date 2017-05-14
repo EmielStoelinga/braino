@@ -72,7 +72,11 @@ public class PlayerControl : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "killbox") {
-			GameObject.Find ("Game").GetComponent<game_script> ().Back (myScoreManager.scoreCount);
+			if (myScoreManager.scoreCount > 10) {
+				GameObject.Find ("Game").GetComponent<game_script> ().Back (myScoreManager.scoreCount);
+			} else {
+				GameObject.Find ("Game").GetComponent<game_script> ().Back (0);
+			}
 		}
 	}
 }

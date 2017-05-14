@@ -15,10 +15,10 @@ public class game_script : MonoBehaviour {
 	public Slider scorebar3;
 	public Slider scorebar4;
 
-	private int score1 = 100;
-	private int score2 = 100;
-	private int score3 = 100;
-	private int score4 = 100;
+	private int score1;
+	private int score2;
+	private int score3;
+	private int score4;
 
 	private Scene active;
 	private bool goBack = false;
@@ -30,18 +30,32 @@ public class game_script : MonoBehaviour {
 	private UnityAction cancelAction;
 
 	private float timer = 1;
+
 	void Start () {
 		//Screen.orientation = ScreenOrientation.Portrait;
 		puzzle.onClick.AddListener(Puzzle);
 		rsi.onClick.AddListener(RSI);
 		run.onClick.AddListener(Run);
 		social.onClick.AddListener(Social);
+
 		DontDestroyOnLoad (transform.gameObject);
 		active = SceneManager.GetSceneByName("test");
+
 		scorebar1.maxValue = 100;
 		scorebar2.maxValue = 100;
 		scorebar3.maxValue = 100;
 		scorebar4.maxValue = 100;
+		if (PlayerPrefs.GetInt ("score1") != null) {
+			score1 = PlayerPrefs.GetInt ("score1");
+			score2 = PlayerPrefs.GetInt ("score2");
+			score3 = PlayerPrefs.GetInt ("score3");
+			score4 = PlayerPrefs.GetInt ("score4");
+		} else {
+			score1 = 100;
+			score2 = 100;
+			score3 = 100;
+			score4 = 100;
+		}
 	}
 
 	void Awake () {
@@ -71,6 +85,11 @@ public class game_script : MonoBehaviour {
 			score3 -= 1;
 			score4 -= 1;
 			timer = 1;
+
+			PlayerPrefs.SetInt ("score1", score1);
+			PlayerPrefs.SetInt ("score2", score2);
+			PlayerPrefs.SetInt ("score3", score3);
+			PlayerPrefs.SetInt ("score4", score4);
 		}
 		score1 = Mathf.Clamp(score1, 0, 100);
 		score2 = Mathf.Clamp(score2, 0, 100);
