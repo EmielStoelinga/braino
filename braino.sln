@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "braino.Plugins", "braino.Plugins.csproj", "{A560F147-4D1F-53B1-7695-58E83F547703}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "braino", "braino.csproj", "{6B19093F-35FC-1577-05F8-2E6011B17D82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "braino.Editor.Plugins", "braino.Editor.Plugins.csproj", "{80DA2C7F-7A2D-ECD7-9FAB-F7D587BEBE02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A560F147-4D1F-53B1-7695-58E83F547703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A560F147-4D1F-53B1-7695-58E83F547703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A560F147-4D1F-53B1-7695-58E83F547703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A560F147-4D1F-53B1-7695-58E83F547703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B19093F-35FC-1577-05F8-2E6011B17D82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B19093F-35FC-1577-05F8-2E6011B17D82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B19093F-35FC-1577-05F8-2E6011B17D82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B19093F-35FC-1577-05F8-2E6011B17D82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80DA2C7F-7A2D-ECD7-9FAB-F7D587BEBE02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80DA2C7F-7A2D-ECD7-9FAB-F7D587BEBE02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80DA2C7F-7A2D-ECD7-9FAB-F7D587BEBE02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80DA2C7F-7A2D-ECD7-9FAB-F7D587BEBE02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
