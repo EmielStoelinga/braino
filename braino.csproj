@@ -95,6 +95,7 @@
     <Compile Include="Assets\Scripts\ST_PuzzleDisplay.cs" />
     <Compile Include="Assets\Scripts\ST_PuzzleTile.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\SharingAndroid.cs" />
     <Compile Include="Assets\Scripts\game_script.cs" />
     <Compile Include="Assets\Scripts\rsi_slideshow.cs" />
     <Compile Include="Assets\Scripts\run_controller.cs" />

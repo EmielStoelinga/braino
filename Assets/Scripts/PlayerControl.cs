@@ -42,9 +42,9 @@ public class PlayerControl : MonoBehaviour {
 
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
 
-		if (grounded && Physics2D.IsTouchingLayers(myCollider, whatIsGround)) {
-			myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, walkJumpForce);
-		}
+		//if (grounded && Physics2D.IsTouchingLayers(myCollider, whatIsGround)) {
+		//	myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, walkJumpForce);
+		//}
 
 		int fingerCount = 0;
 		foreach (Touch touch in Input.touches) {
@@ -52,7 +52,7 @@ public class PlayerControl : MonoBehaviour {
 				fingerCount++;
 		}
 
-		if (fingerCount == 1) {
+		if (fingerCount == 1 || Input.GetMouseButtonDown(0)) {
 			if (jumpTimeCounter > 0) {
 				myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, jumpForce);
 				jumpTimeCounter -= Time.deltaTime;
