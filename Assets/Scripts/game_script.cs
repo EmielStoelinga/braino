@@ -47,11 +47,8 @@ public class game_script : MonoBehaviour {
 		scorebar2.maxValue = 100;
 		scorebar3.maxValue = 100;
 		scorebar4.maxValue = 100;
-		if (PlayerPrefs.GetInt ("score1") != null) {
-			score1 = PlayerPrefs.GetInt ("score1");
-			score2 = PlayerPrefs.GetInt ("score2");
-			score3 = PlayerPrefs.GetInt ("score3");
-			score4 = PlayerPrefs.GetInt ("score4");
+		if (PlayerPrefs.HasKey ("score1")) {
+			CalculateScores ();
 		} else {
 			score1 = 100;
 			score2 = 100;
@@ -79,6 +76,27 @@ public class game_script : MonoBehaviour {
 		scorebar4.transform.Find("Fill Area").GetComponentInChildren<Image>().color = Color.Lerp(Color.red, Color.green, (float)score4/100f);
 	}
 
+	void LogScores() {
+		PlayerPrefs.SetInt ("score1", score1);
+		PlayerPrefs.SetInt ("score2", score2);
+		PlayerPrefs.SetInt ("score3", score3);
+		PlayerPrefs.SetInt ("score4", score4);
+
+		System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+		int cur_time = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
+		PlayerPrefs.SetInt ("timestamp", cur_time);
+	}
+
+	void CalculateScores() {
+		System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+		int cur_time = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
+		int elapsed_seconds = cur_time - PlayerPrefs.GetInt ("timestamp");
+		score1 = PlayerPrefs.GetInt ("score1") - (elapsed_seconds / decreaseScoreAfterSeconds);
+		score2 = PlayerPrefs.GetInt ("score2") - (elapsed_seconds / decreaseScoreAfterSeconds);
+		score3 = PlayerPrefs.GetInt ("score3") - (elapsed_seconds / decreaseScoreAfterSeconds);
+		score4 = PlayerPrefs.GetInt ("score4") - (elapsed_seconds / decreaseScoreAfterSeconds);
+	}
+
 	void Update () {
 		timer -= Time.deltaTime;
 		if (timer <= 0) {
@@ -87,11 +105,7 @@ public class game_script : MonoBehaviour {
 			score3 -= 1;
 			score4 -= 1;
 			timer = decreaseScoreAfterSeconds;
-
-			PlayerPrefs.SetInt ("score1", score1);
-			PlayerPrefs.SetInt ("score2", score2);
-			PlayerPrefs.SetInt ("score3", score3);
-			PlayerPrefs.SetInt ("score4", score4);
+			LogScores ();
 		}
 		score1 = Mathf.Clamp(score1, 0, 100);
 		score2 = Mathf.Clamp(score2, 0, 100);
