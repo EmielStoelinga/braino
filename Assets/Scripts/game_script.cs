@@ -15,6 +15,8 @@ public class game_script : MonoBehaviour {
 	public Slider scorebar3;
 	public Slider scorebar4;
 
+	public int decreaseScoreAfterSeconds;
+
 	private int score1;
 	private int score2;
 	private int score3;
@@ -84,7 +86,7 @@ public class game_script : MonoBehaviour {
 			score2 -= 1;
 			score3 -= 1;
 			score4 -= 1;
-			timer = 1;
+			timer = decreaseScoreAfterSeconds;
 
 			PlayerPrefs.SetInt ("score1", score1);
 			PlayerPrefs.SetInt ("score2", score2);
