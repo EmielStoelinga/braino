@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class rsi_slideshow : MonoBehaviour {
 
-	public Image rsiImage;
 	public List<Sprite> images = new List<Sprite>();
 	public float showspeed;
 	public int imagecount;
@@ -18,8 +17,8 @@ public class rsi_slideshow : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//Screen.orientation = ScreenOrientation.Portrait;
-		for (int i = 0; i < imagecount; i++) {
+        Screen.orientation = ScreenOrientation.Portrait;
+        for (int i = 0; i < imagecount; i++) {
 			slideshow.Add (images[i]);
 		}
 		/*
@@ -45,8 +44,23 @@ public class rsi_slideshow : MonoBehaviour {
 			GameObject.Find ("Game").GetComponent<game_script> ().Back (reward);
 		}
 
-		rsiImage.sprite = slideshow [index];
+        GetComponent<SpriteRenderer>().sprite = slideshow [index];
 
+        ResizeSpriteToScreen();
+    }
 
-	}
+    void ResizeSpriteToScreen () {
+        var sr = GetComponent<SpriteRenderer>();
+        if (sr == null) return;
+
+        transform.localScale = new Vector3(1, 1, 1);
+
+        var width = sr.sprite.bounds.size.x;
+        var height = sr.sprite.bounds.size.y;
+
+        var worldScreenHeight = Camera.main.orthographicSize * 2.0;
+        var worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
+
+        transform.localScale = new Vector2((float)worldScreenWidth / width, (float)worldScreenHeight / height);
+    }
 }

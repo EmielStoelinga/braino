@@ -17,10 +17,10 @@ public class game_script : MonoBehaviour {
 
 	public int decreaseScoreAfterSeconds;
 
-	private int score1;
-	private int score2;
-	private int score3;
-	private int score4;
+	private float score1;
+	private float score2;
+	private float score3;
+	private float score4;
 
 	private Scene active;
 	private bool goBack = false;
@@ -31,7 +31,7 @@ public class game_script : MonoBehaviour {
 	private UnityAction backAction;
 	private UnityAction cancelAction;
 
-	private float timer = 1;
+	private float lastTime = 0;
 
 	void Start () {
 		//Screen.orientation = ScreenOrientation.Portrait;
@@ -47,17 +47,24 @@ public class game_script : MonoBehaviour {
 		scorebar2.maxValue = 100;
 		scorebar3.maxValue = 100;
 		scorebar4.maxValue = 100;
-		if (PlayerPrefs.GetInt ("score1") != null) {
-			score1 = PlayerPrefs.GetInt ("score1");
-			score2 = PlayerPrefs.GetInt ("score2");
-			score3 = PlayerPrefs.GetInt ("score3");
-			score4 = PlayerPrefs.GetInt ("score4");
-		} else {
-			score1 = 100;
-			score2 = 100;
-			score3 = 100;
-			score4 = 100;
-		}
+		if (PlayerPrefs.HasKey ("lasttime")) {
+			score1 = PlayerPrefs.GetFloat("score1");
+			score2 = PlayerPrefs.GetFloat("score2");
+			score3 = PlayerPrefs.GetFloat("score3");
+			score4 = PlayerPrefs.GetFloat("score4");
+            lastTime = PlayerPrefs.GetFloat("lasttime");
+        } else {
+			score1 = 50;
+			score2 = 50;
+			score3 = 50;
+			score4 = 50;
+            lastTime = Time.time;
+            PlayerPrefs.SetFloat("score1", score1);
+            PlayerPrefs.SetFloat("score2", score2);
+            PlayerPrefs.SetFloat("score3", score3);
+            PlayerPrefs.SetFloat("score4", score4);
+            PlayerPrefs.SetFloat("lasttime", lastTime);
+        }
 	}
 
 	void Awake () {
@@ -80,28 +87,29 @@ public class game_script : MonoBehaviour {
 	}
 
 	void Update () {
-		timer -= Time.deltaTime;
-		if (timer <= 0) {
-			score1 -= 1;
-			score2 -= 1;
-			score3 -= 1;
-			score4 -= 1;
-			timer = decreaseScoreAfterSeconds;
+        lastTime = PlayerPrefs.GetFloat("lasttime");
+        float deltatime = Time.time - lastTime;
+        PlayerPrefs.SetFloat("lasttime", Time.time);
+        score1 -= deltatime / decreaseScoreAfterSeconds;
+		score2 -= deltatime / decreaseScoreAfterSeconds;
+		score3 -= deltatime / decreaseScoreAfterSeconds;
+		score4 -= deltatime / decreaseScoreAfterSeconds;
 
-			PlayerPrefs.SetInt ("score1", score1);
-			PlayerPrefs.SetInt ("score2", score2);
-			PlayerPrefs.SetInt ("score3", score3);
-			PlayerPrefs.SetInt ("score4", score4);
-		}
-		score1 = Mathf.Clamp(score1, 0, 100);
-		score2 = Mathf.Clamp(score2, 0, 100);
-		score3 = Mathf.Clamp(score3, 0, 100);
-		score4 = Mathf.Clamp(score4, 0, 100);
+        score1 = Mathf.Clamp(score1, 0, 100);
+        score2 = Mathf.Clamp(score2, 0, 100);
+        score3 = Mathf.Clamp(score3, 0, 100);
+        score4 = Mathf.Clamp(score4, 0, 100);
 
-		if (Input.GetKeyDown("escape")) {
-			modalPanel.Choice ("Do you want to stop?", backAction, cancelAction);
-		}
-	}
+        PlayerPrefs.SetFloat("score1", score1);
+		PlayerPrefs.SetFloat("score2", score2);
+		PlayerPrefs.SetFloat("score3", score3);
+		PlayerPrefs.SetFloat("score4", score4);
+
+        if (Input.GetKeyDown("escape") && active != SceneManager.GetSceneByName("test"))
+        {
+            modalPanel.Choice("Do you want to stop?", backAction, cancelAction);
+        }
+    }
 
 	void LateUpdate() {
 		if (goBack) {
