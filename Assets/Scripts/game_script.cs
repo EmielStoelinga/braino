@@ -47,23 +47,15 @@ public class game_script : MonoBehaviour {
 		scorebar2.maxValue = 100;
 		scorebar3.maxValue = 100;
 		scorebar4.maxValue = 100;
-		if (PlayerPrefs.HasKey ("lasttime")) {
-			score1 = PlayerPrefs.GetFloat("score1");
-			score2 = PlayerPrefs.GetFloat("score2");
-			score3 = PlayerPrefs.GetFloat("score3");
-			score4 = PlayerPrefs.GetFloat("score4");
-            lastTime = PlayerPrefs.GetFloat("lasttime");
+		if (PlayerPrefs.HasKey ("timestamp")) {
+			CalculateScores();
         } else {
-			score1 = 50;
-			score2 = 50;
-			score3 = 50;
-			score4 = 50;
+		    score1 = 50;
+		    score2 = 50;
+		    score3 = 50;
+		    score4 = 50;
             lastTime = Time.time;
-            PlayerPrefs.SetFloat("score1", score1);
-            PlayerPrefs.SetFloat("score2", score2);
-            PlayerPrefs.SetFloat("score3", score3);
-            PlayerPrefs.SetFloat("score4", score4);
-            PlayerPrefs.SetFloat("lasttime", lastTime);
+            LogScores();
         }
 	}
 
@@ -86,24 +78,29 @@ public class game_script : MonoBehaviour {
 		scorebar4.transform.Find("Fill Area").GetComponentInChildren<Image>().color = Color.Lerp(Color.red, Color.green, (float)score4/100f);
 	}
 
-	void Update () {
-        lastTime = PlayerPrefs.GetFloat("lasttime");
-        float deltatime = Time.time - lastTime;
-        PlayerPrefs.SetFloat("lasttime", Time.time);
-        score1 -= deltatime / decreaseScoreAfterSeconds;
-		score2 -= deltatime / decreaseScoreAfterSeconds;
-		score3 -= deltatime / decreaseScoreAfterSeconds;
-		score4 -= deltatime / decreaseScoreAfterSeconds;
-
-        score1 = Mathf.Clamp(score1, 0, 100);
-        score2 = Mathf.Clamp(score2, 0, 100);
-        score3 = Mathf.Clamp(score3, 0, 100);
-        score4 = Mathf.Clamp(score4, 0, 100);
-
-        PlayerPrefs.SetFloat("score1", score1);
+	void LogScores() {
+		PlayerPrefs.SetFloat("score1", score1);
 		PlayerPrefs.SetFloat("score2", score2);
 		PlayerPrefs.SetFloat("score3", score3);
 		PlayerPrefs.SetFloat("score4", score4);
+		PlayerPrefs.SetFloat("timestamp", Time.time);
+	}
+
+	void CalculateScores() {
+		float elapsed_seconds = Time.time - PlayerPrefs.GetFloat("timestamp");
+		score1 = PlayerPrefs.GetFloat("score1") - (elapsed_seconds / decreaseScoreAfterSeconds);
+		score2 = PlayerPrefs.GetFloat("score2") - (elapsed_seconds / decreaseScoreAfterSeconds);
+		score3 = PlayerPrefs.GetFloat("score3") - (elapsed_seconds / decreaseScoreAfterSeconds);
+		score4 = PlayerPrefs.GetFloat("score4") - (elapsed_seconds / decreaseScoreAfterSeconds);
+		score1 = Mathf.Clamp(score1, 0, 100);
+		score2 = Mathf.Clamp(score2, 0, 100);
+		score3 = Mathf.Clamp(score3, 0, 100);
+		score4 = Mathf.Clamp(score4, 0, 100);
+	}
+
+	void Update () {
+        CalculateScores();
+        LogScores ();
 
         if (Input.GetKeyDown("escape") && active != SceneManager.GetSceneByName("test"))
         {
@@ -153,15 +150,16 @@ public class game_script : MonoBehaviour {
 		goBack = true;
 
 		if (active == SceneManager.GetSceneByName("Puzzlescene")) {
-			score1 += (int)score;
+			score1 += score;
 		} else if (active == SceneManager.GetSceneByName("RSIscene")) {
-			score2 += (int)score;
+			score2 += score;
 		} else if (active == SceneManager.GetSceneByName("EmielRunscene")) {
-			score3 += (int)score;
+			score3 += score;
 		} else if (active == SceneManager.GetSceneByName("Socialscene")) {
-			score4 += (int)score;
+			score4 += score;
 		}
-	}
+        LogScores();
+    }
 
 	void BackFunction () {
 		Back (0);
