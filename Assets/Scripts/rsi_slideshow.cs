@@ -15,6 +15,8 @@ public class rsi_slideshow : MonoBehaviour {
 	private int index = 0;
 	private float timer = 0f;
 
+    public Text counter;
+
 	// Use this for initialization
 	void Start () {
         Screen.orientation = ScreenOrientation.Portrait;
@@ -47,6 +49,8 @@ public class rsi_slideshow : MonoBehaviour {
         GetComponent<SpriteRenderer>().sprite = slideshow [index];
 
         ResizeSpriteToScreen();
+
+        counter.text = ((int)(showspeed - timer)).ToString();
     }
 
     void ResizeSpriteToScreen () {
