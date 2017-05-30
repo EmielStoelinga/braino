@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class ST_PuzzleDisplay : MonoBehaviour 
 {
 	// this puzzle texture.
-	public Texture PuzzleImage;
+	public Texture[] thePuzzleImages;
+	private Texture PuzzleImage;
+	private int imageIndex;
 
 	// the width and height of the puzzle in tiles.
 	public int Height = 3;
@@ -43,6 +45,8 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		//Screen.orientation = ScreenOrientation.LandscapeLeft;
 
 		// create the games puzzle tiles from the provided image.
+		imageIndex = Random.Range(0, thePuzzleImages.Length);
+		PuzzleImage = thePuzzleImages [imageIndex];
 		CreatePuzzleTiles();
 
 		// mix up the puzzle.

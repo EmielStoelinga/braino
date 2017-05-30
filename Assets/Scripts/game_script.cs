@@ -121,7 +121,7 @@ public class game_script : MonoBehaviour {
 
 	void Puzzle () {
 		Debug.Log ("Clicked puzzle");
-		instructionsPanel.Choice ("Relaxed your brain and solve a puzzle. Move a tile by tapping on it.", cancelAction);
+		instructionsPanel.Choice ("Relax your brain and solve a puzzle. Move a tile by tapping on it.", cancelAction);
 		SceneManager.LoadScene ("Puzzlescene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Puzzlescene");
 		UIPanelObject.SetActive (false);
