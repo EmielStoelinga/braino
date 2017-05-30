@@ -29,8 +29,6 @@ public class game_script : MonoBehaviour {
 	private InstructionsPanel instructionsPanel;
 	public GameObject UIPanelObject;
 
-	private bool instructedEmielsRunscene;
-
 	private UnityAction backAction;
 	private UnityAction cancelAction;
 
@@ -60,8 +58,6 @@ public class game_script : MonoBehaviour {
             lastTime = Time.time;
             LogScores();
         }
-
-		instructedEmielsRunscene = false;
 	}
 
 	void Awake () {
@@ -112,12 +108,6 @@ public class game_script : MonoBehaviour {
         {
             modalPanel.Choice("Do you want to stop?", backAction, cancelAction);
         }
-		/*
-		if (active.name == "EmielRunscene" && !instructedEmielsRunscene) {
-			instructionsPanel.Choice("instruct runscene", cancelAction);
-			instructedEmielsRunscene = true;
-		}
-		*/
     }
 
 	void LateUpdate() {
