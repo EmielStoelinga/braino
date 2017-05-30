@@ -1,6 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour {
 
@@ -21,7 +24,7 @@ public class GameManager : MonoBehaviour {
 	
 		theScoreManager = FindObjectOfType<ScoreManager> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		
