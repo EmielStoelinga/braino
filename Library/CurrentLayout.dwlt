@@ -42,8 +42,8 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 683, y: 492}
-  m_MaxSize: {x: 14004, y: 14042}
+  m_MinSize: {x: 683, y: 342}
+  m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
   controlID: 47
 --- !u!114 &3
@@ -64,8 +64,8 @@ MonoBehaviour:
     y: 0
     width: 556
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -114,14 +114,14 @@ MonoBehaviour:
     y: 671
     width: 1364
     height: 276
-  m_MinSize: {x: 232, y: 271}
-  m_MaxSize: {x: 10002, y: 10021}
-  m_ActualView: {fileID: 13}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 13}
   - {fileID: 18}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -206,8 +206,8 @@ MonoBehaviour:
     y: 0
     width: 1364
     height: 947
-  m_MinSize: {x: 406, y: 492}
-  m_MaxSize: {x: 10002, y: 14042}
+  m_MinSize: {x: 406, y: 342}
+  m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
   controlID: 48
 --- !u!114 &10
@@ -252,8 +252,8 @@ MonoBehaviour:
     y: 0
     width: 960
     height: 671
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 204, y: 221}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -341,19 +341,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts
+    - Assets
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\emiel\Documents\AI\Master\applab\braino
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 56260000
-    m_LastClickedID: 9814
-    m_ExpandedIDs: 00000000bc25000000ca9a3bffffff7f
+    m_SelectedIDs: ea240000
+    m_LastClickedID: 9450
+    m_ExpandedIDs: 00000000ea24000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -381,7 +381,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000bc250000
+    m_ExpandedIDs: 00000000ea240000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -451,7 +451,7 @@ MonoBehaviour:
   m_MinSize: {x: 275, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
-    m_Text: Debug
+    m_Text: Inspector
     m_Image: {fileID: -6905738622615590433, guid: 0000000000000000d000000000000000,
       type: 0}
     m_Tooltip: 
@@ -463,7 +463,7 @@ MonoBehaviour:
     width: 554
     height: 926
   m_ScrollPosition: {x: 0, y: 0}
-  m_InspectorMode: 1
+  m_InspectorMode: 0
   m_PreviewResizer:
     m_CachedPref: 160
     m_ControlHash: -371814159
@@ -499,7 +499,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 9aedffff26eefffff0eeffff3aefffff40efffff4cefffff54efffff58effffff8faffffe4fbffff00000000
+    m_ExpandedIDs: b098ffff1a99ffffe499ffff2e9affff349affff409affff489affff4c9affff809dffffea9dffffb49efffffe9effff049fffff109fffff189fffff1c9fffff68a2ffffd2a2ffff9ca3ffffe6a3ffffeca3fffff8a3ffff00a4ffff04a4ffff20a5ffff80a5ffff4aa6ffff94a6ffff9aa6ffffa6a6ffffaea6ffffb2a6ffff3cb9ffffc2b9ffff8cbaffffd6baffffdcbaffffe8bafffff0bafffff4baffff04d1ffff8ad1ffff54d2ffff9ed2ffffa4d2ffffb0d2ffffb8d2ffffbcd2fffffcd4ffffacd7ffff48d8ffffc0d9ffff22daffffecdaffff36dbffff3cdbffff48dbffff50dbffff54dbffffb8deffff44dfffff0ee0ffff58e0ffff5ee0ffff6ae0ffff72e0ffff76e0ffffe4e1ffff70e2ffff3ae3ffff84e3ffff8ae3ffff96e3ffff9ee3ffffa2e3ffffa4e5ffff30e6fffffee6ffff4ce7ffff56e7ffff66e7ffff72e7ffff7ae7ffffdcf8ffff68f9ffff32faffff7cfaffff82faffff8efaffff96faffff9afaffffe4fbffff00000000ec520000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

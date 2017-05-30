@@ -19,7 +19,7 @@ public class rsi_slideshow : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Screen.orientation = ScreenOrientation.Portrait;
+        //Screen.orientation = ScreenOrientation.Portrait;
         for (int i = 0; i < imagecount; i++) {
 			slideshow.Add (images[i]);
 		}
