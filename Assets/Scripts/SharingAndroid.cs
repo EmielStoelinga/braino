@@ -1,33 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SharingAndroid : MonoBehaviour {
 
-    string subject = "Braino";
-    string body = "DESCRIPTION";
+    public float reward;
 
     public void Start()
     {
-        //execute the below lines if being run on a Android device
+        
+        shareImage("Braino", "Braino", "Good job!", "Resources/brain.png");
+        GameObject.Find("Game").GetComponent<game_script>().Back(reward);
+    }
+
+    public static void shareImage(string subject, string title, string message, string imagePath)
+    {
     #if UNITY_ANDROID
-        //Refernece of AndroidJavaClass class for intent
+
         AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
-        //Refernece of AndroidJavaObject class for intent
         AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");
-        //call setAction method of the Intent object created
         intentObject.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_SEND"));
-        //set the type of sharing that is happening
-        intentObject.Call<AndroidJavaObject>("setType", "text/plain");
-        //add data to be passed to the other activity i.e., the data to be sent
+        intentObject.Call<AndroidJavaObject>("setType", "image/png");
         intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_SUBJECT"), subject);
-        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TEXT"), body);
-        //get the current activity
+        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TITLE"), title);
+        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TEXT"), message);
+
+        AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri");
+        AndroidJavaClass fileClass = new AndroidJavaClass("java.io.File");
+
+        AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("parse", "file://" + imagePath);
+
+        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_STREAM"), uriObject);
+
         AndroidJavaClass unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject currentActivity = unity.GetStatic<AndroidJavaObject>("currentActivity");
-        //start the activity by sending the intent data
         currentActivity.Call("startActivity", intentObject);
-    #endif
 
+    #endif
     }
 }
