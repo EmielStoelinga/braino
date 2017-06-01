@@ -17,10 +17,10 @@ public class game_script : MonoBehaviour {
 
 	public int decreaseScoreAfterSeconds;
 
-	private float score1;
-	private float score2;
-	private float score3;
-	private float score4;
+	public float score1;
+	public float score2;
+	public float score3;
+	public float score4;
 
 	private Scene active;
 	private bool goBack = false;
@@ -33,6 +33,8 @@ public class game_script : MonoBehaviour {
 	private UnityAction cancelAction;
 
 	private float lastTime = 0;
+
+	private float avgScore;
 
 	void Start () {
 		//Screen.orientation = ScreenOrientation.Portrait;
@@ -109,6 +111,13 @@ public class game_script : MonoBehaviour {
             modalPanel.Choice("Do you want to stop?", backAction, cancelAction);
         }
     }
+
+	void UpdateBrainoImages() {
+		avgScore = (score1 + score2 + score3 + score4) / 4;
+		if (avgScore >= 90.0) {
+
+		}
+	}
 
 	void LateUpdate() {
 		if (goBack) {
