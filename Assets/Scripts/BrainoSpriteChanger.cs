@@ -47,8 +47,8 @@ public class BrainoSpriteChanger : MonoBehaviour {
 		} else {
 			image.texture = images[0];
 		}
-		var width = (int)(.5 * Screen.width);
-		var height = width; // To make it square
+		var height = (int)(.5 * Screen.height);
+		var width = height; // To make it square
 
 		image.GetComponent<RectTransform> ().sizeDelta = new Vector2(width, height);
 
