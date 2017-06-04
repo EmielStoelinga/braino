@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Networking;
 
 public class game_script : MonoBehaviour {
 	public Button puzzle;
@@ -35,6 +38,8 @@ public class game_script : MonoBehaviour {
 	private float lastTime = 0;
 
 	private float avgScore;
+	
+	private string userIdString = "9999";
 
 	void Start () {
 		//Screen.orientation = ScreenOrientation.Portrait;
@@ -130,6 +135,8 @@ public class game_script : MonoBehaviour {
 
 	void Puzzle () {
 		Debug.Log ("Clicked puzzle");
+		StartCoroutine(Upload(userIdString, "logPuzzle")); //log code
+		
 		instructionsPanel.Choice ("Relax your brain and solve a puzzle. Move a tile by tapping on it.", cancelAction);
 		SceneManager.LoadScene ("Puzzlescene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Puzzlescene");
@@ -138,6 +145,8 @@ public class game_script : MonoBehaviour {
 
 	void RSI () {
 		Debug.Log ("Clicked RSI");
+		StartCoroutine(Upload(userIdString, "logRSI")); //log code
+		
 		instructionsPanel.Choice ("Relax your brain and your body by doing some exercises. Follow the photo instructions.", cancelAction);
 		SceneManager.LoadScene ("RSIscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("RSIscene");
@@ -146,7 +155,10 @@ public class game_script : MonoBehaviour {
 
 	void Run () {
 		Debug.Log ("Clicked run");
-		instructionsPanel.Choice ("Get focused by playing a game. Tap to jump, hold to jump higher.", cancelAction);
+		StartCoroutine(Upload(userIdString, "logFocus")); //log code
+		
+		
+		//instructionsPanel.Choice ("Get focused by playing a game. Tap to jump, hold to jump higher.", cancelAction);
 		SceneManager.LoadScene ("EmielRunscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("EmielRunscene");
 		UIPanelObject.SetActive (false);
@@ -154,11 +166,49 @@ public class game_script : MonoBehaviour {
 
 	void Social () {
 		Debug.Log ("Clicked social");
+		StartCoroutine(Upload(userIdString, "logSocial")); //log code
+		
 		instructionsPanel.Choice ("Give somebody a compliment via social media!", cancelAction);
 		SceneManager.LoadScene ("Socialscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Socialscene");
 		UIPanelObject.SetActive (false);
 	}
+	
+	IEnumerator Upload(string user, string activity) {
+        WWWForm form = new WWWForm();
+        form.AddField("user", user);
+		form.AddField("query", activity);
+ 
+		WWW www = new WWW("http://eireenwestland.ruhosting.nl/braino/braino.php", form);
+        yield return www;
+ 
+        if(www.error != null) {
+            Debug.Log(www.error);
+        }
+        else {
+            Debug.Log("Form upload complete!");
+        }
+    }
+	
+	IEnumerator UploadAI(string user) {
+        WWWForm form = new WWWForm();
+        form.AddField("user", user);
+		form.AddField("query", "getSuggestion");
+ 
+		WWW www = new WWW("http://eireenwestland.ruhosting.nl/braino/braino.php", form);
+        yield return www;
+ 
+        if(www.error != null) {
+            Debug.Log(www.error);
+        }
+        else {
+            Debug.Log("AI request complete!");
+			instructionsPanel.Choice ("De suggestie is: " + www.text, cancelAction);
+        }
+		
+		
+    }
+	
 
 	public void Back (float score) {
 		Debug.Log ("Back");
