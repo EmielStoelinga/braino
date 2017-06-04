@@ -55,10 +55,13 @@ public class game_script : MonoBehaviour {
 		scorebar2.maxValue = 100;
 		scorebar3.maxValue = 100;
 		scorebar4.maxValue = 100;
-		if (PlayerPrefs.HasKey ("timestamp")) {
-			CalculateScores();
+		if (PlayerPrefs.HasKey ("userID")) {
+            PlayerPrefs.GetString("userID", userIdString);
+            CalculateScores();
         } else {
-		    score1 = 50;
+            userIdString = Random.Range(0, 1000000).ToString();
+            PlayerPrefs.SetString("userID", userIdString);
+            score1 = 50;
 		    score2 = 50;
 		    score3 = 50;
 		    score4 = 50;

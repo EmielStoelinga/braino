@@ -84,6 +84,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BrainoSpriteChanger.cs" />
     <Compile Include="Assets\Scripts\BringToFront.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Assets\Scripts\PlatformDestroyer.cs" />
     <Compile Include="Assets\Scripts\PlatformGenerator.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\RecommendationImageScript.cs" />
     <Compile Include="Assets\Scripts\ST_PuzzleDisplay.cs" />
     <Compile Include="Assets\Scripts\ST_PuzzleTile.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
