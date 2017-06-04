@@ -193,7 +193,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 
 		yield return new WaitForSeconds(1.0f);
 
-		for(int k = 0; k < 20; k++)
+		for(int k = 0; k < 8; k++)
 		{
 			// use random to position each puzzle section in the array delete the number once the space is filled.
 			for(int j = 0; j < Height; j++)
