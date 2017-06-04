@@ -47,10 +47,22 @@ public class BrainoSpriteChanger : MonoBehaviour {
 		} else {
 			image.texture = images[0];
 		}
-		var height = (int)(.5 * Screen.height);
-		var width = height; // To make it square
+        ResizeSpriteToScreen();
+    }
 
-		image.GetComponent<RectTransform> ().sizeDelta = new Vector2(width, height);
+    void ResizeSpriteToScreen()
+    {
+        var sr = GetComponent<SpriteRenderer>();
+        if (sr == null) return;
 
-	}
+        transform.localScale = new Vector3(1, 1, 1);
+
+        var width = sr.sprite.bounds.size.x;
+        var height = sr.sprite.bounds.size.y;
+
+        var worldScreenHeight = Camera.main.orthographicSize * 2.0;
+        var worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
+
+        transform.localScale = new Vector2((float)worldScreenWidth / width, (float)worldScreenHeight / height);
+    }
 }
