@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\PlatformGenerator.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
      <Compile Include="Assets\Scripts\RecommendationImageScript.cs" />
+     <Compile Include="Assets\Scripts\RecommendationTextScript.cs" />
      <Compile Include="Assets\Scripts\ST_PuzzleDisplay.cs" />
      <Compile Include="Assets\Scripts\ST_PuzzleTile.cs" />
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
