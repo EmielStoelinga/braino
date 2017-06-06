@@ -35,8 +35,6 @@ public class game_script : MonoBehaviour {
 	private UnityAction backAction;
 	private UnityAction cancelAction;
 
-	private float lastTime = 0;
-
 	private float avgScore;
 	
 	private string userIdString = "9999";
@@ -65,7 +63,6 @@ public class game_script : MonoBehaviour {
 		    score2 = 50;
 		    score3 = 50;
 		    score4 = 50;
-            lastTime = Time.time;
             LogScores();
         }
 	}
