@@ -154,9 +154,7 @@ public class game_script : MonoBehaviour {
 	}
 
 	void Run () {
-		Debug.Log ("Clicked run");
-		StartCoroutine(Upload(userIdString, "logFocus")); //log code
-		
+		Debug.Log ("Clicked run");		
 		instructionsPanel.Choice ("Get focused by playing a game. Tap to jump, hold to jump higher.", cancelAction);
 		SceneManager.LoadScene ("EmielRunscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("EmielRunscene");
@@ -173,7 +171,7 @@ public class game_script : MonoBehaviour {
 		UIPanelObject.SetActive (false);
 	}
 	
-	IEnumerator Upload(string user, string activity) {
+	IEnumerator Upload(string user, string activity, ) {
         WWWForm form = new WWWForm();
         form.AddField("user", user);
 		form.AddField("query", activity);
@@ -189,6 +187,8 @@ public class game_script : MonoBehaviour {
         }
     }
 	
+		// 		AI aanroepen:	StartCoroutine(UploadAI(userIdString)); //log code
+
 	IEnumerator UploadAI(string user) {
         WWWForm form = new WWWForm();
         form.AddField("user", user);
@@ -200,9 +200,19 @@ public class game_script : MonoBehaviour {
         if(www.error != null) {
             Debug.Log(www.error);
         }
-        else {
+          else {
             Debug.Log("AI request complete!");
-			instructionsPanel.Choice ("De suggestie is: " + www.text, cancelAction);
+			string suggestion = "Welcome back! Wanna play a game?";
+			if(www.type.equals("logFocus")){
+				suggestion = "Focus yourself with the running game!";
+			} else if (www.type.equals("logRSI")){
+				suggestion = "Prevent RSI, do some exercises with me!";
+			} else if (www.type.equals("logPuzzle")){
+				suggestion = "Relax while solving a fun puzzle!";
+			} else if (www.type.equals("logSocial")){
+				suggestion = "Did you already compliment someone today?"
+			}
+			instructionsPanel.Choice (suggestion, cancelAction);
         }
 		
 		
@@ -215,12 +225,20 @@ public class game_script : MonoBehaviour {
 
 		if (active == SceneManager.GetSceneByName("Puzzlescene")) {
 			score1 += score;
+			StartCoroutine(Upload(userIdString, "logPuzzle", score1, score2, score3, score4)); //log code
+
 		} else if (active == SceneManager.GetSceneByName("RSIscene")) {
 			score2 += score;
+			StartCoroutine(Upload(userIdString, "logRSI", score1, score2, score3, score4)); //log code
+
 		} else if (active == SceneManager.GetSceneByName("EmielRunscene")) {
 			score3 += score;
+			StartCoroutine(Upload(userIdString, "logFocus", score1, score2, score3, score4)); //log code
+
 		} else if (active == SceneManager.GetSceneByName("Socialscene")) {
 			score4 += score;
+			StartCoroutine(Upload(userIdString, "logSocial", score1, score2, score3, score4)); //log code
+
 		}
         LogScores();
     }
