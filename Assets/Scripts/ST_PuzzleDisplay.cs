@@ -239,7 +239,7 @@ public class ST_PuzzleDisplay : MonoBehaviour
 		if(Complete)
 		{
 			Debug.Log("Puzzle Complete!");
-			GameObject.Find ("Game").GetComponent<game_script> ().Back (100);
+			GameObject.Find ("Game").GetComponent<game_script> ().Back (25);
 		}
 
 		yield return null;
