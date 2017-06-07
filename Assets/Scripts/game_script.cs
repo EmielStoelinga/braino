@@ -41,8 +41,11 @@ public class game_script : MonoBehaviour {
 	private int AIchoice = 0; // 0 = no AI, 1 is AI
 	private string userIdString = "4";
 
+	
 	void Start () {
 		//Screen.orientation = ScreenOrientation.Portrait;
+		
+		PlayerPrefs.DeleteAll();
 		puzzle.onClick.AddListener(Puzzle);
 		rsi.onClick.AddListener(RSI);
 		run.onClick.AddListener(Run);
@@ -63,7 +66,8 @@ public class game_script : MonoBehaviour {
         } else {
             userIdString = Random.Range(0, 1000000).ToString();
             PlayerPrefs.SetString("userID", userIdString);
-			
+			StartCoroutine(setAIVar(userIdString));
+
             score1 = 50;
 		    score2 = 50;
 		    score3 = 50;
@@ -213,15 +217,20 @@ public class game_script : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("user", user);
 		form.AddField("query", "getSuggestion");
+		form.AddField("s1", 1);
+		form.AddField("s2", 2);
+		form.AddField("s3", 3);
+		form.AddField("s4", 4);
+
  
 		WWW www = new WWW("http://eireenwestland.ruhosting.nl/braino/braino.php", form);
         yield return www;
- 
+//		string wwwtext = System.Text.Encoding.UTF8.GetString(www.bytes, 3, www.bytes.Length - 3);
         if(www.error != null) {
             Debug.Log(www.error);
         } else {
             Debug.Log("AI request complete!");
-			string suggestion = "Welcome back! Wanna play a game?";
+			string suggestion = www.text;// "Welcome back! Wanna play a game?";
 			if(www.text == "logFocus"){
 				suggestion = "Focus yourself with the running game!";
 			} else if (www.text == "logRSI"){
@@ -243,6 +252,10 @@ public class game_script : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("user", user);
 		form.AddField("query", "initUser");
+		form.AddField("s1", 1);
+		form.AddField("s2", 2);
+		form.AddField("s3", 3);
+		form.AddField("s4", 4);
  
 		WWW www = new WWW("http://eireenwestland.ruhosting.nl/braino/braino.php", form);
         yield return www;
@@ -251,7 +264,7 @@ public class game_script : MonoBehaviour {
             Debug.Log(www.error);
         } else {
             Debug.Log("AI choice request complete!");
-			
+			Debug.Log(www.text);
 			if(www.text == "1"){
 				AIchoice = 1;
 			}
