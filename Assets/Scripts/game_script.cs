@@ -171,10 +171,14 @@ public class game_script : MonoBehaviour {
 		UIPanelObject.SetActive (false);
 	}
 	
-	IEnumerator Upload(string user, string activity, ) {
+	IEnumerator Upload(string user, string activity, int s1, int s2, int s3, int s4 ) {
         WWWForm form = new WWWForm();
         form.AddField("user", user);
 		form.AddField("query", activity);
+		form.AddField("s1", s1);
+		form.AddField("s2", s2);
+		form.AddField("s3", s3);
+		form.AddField("s4", s4); 
  
 		WWW www = new WWW("http://eireenwestland.ruhosting.nl/braino/braino.php", form);
         yield return www;
@@ -203,13 +207,13 @@ public class game_script : MonoBehaviour {
           else {
             Debug.Log("AI request complete!");
 			string suggestion = "Welcome back! Wanna play a game?";
-			if(www.type.equals("logFocus")){
+			if(www.text == ("logFocus")){
 				suggestion = "Focus yourself with the running game!";
-			} else if (www.type.equals("logRSI")){
+			} else if (www.text == ("logRSI")){
 				suggestion = "Prevent RSI, do some exercises with me!";
-			} else if (www.type.equals("logPuzzle")){
+			} else if (www.text == ("logPuzzle")){
 				suggestion = "Relax while solving a fun puzzle!";
-			} else if (www.type.equals("logSocial")){
+			} else if (www.text == ("logSocial")){
 				suggestion = "Did you already compliment someone today?"
 			}
 			instructionsPanel.Choice (suggestion, cancelAction);
