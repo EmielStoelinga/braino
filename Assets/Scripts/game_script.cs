@@ -157,8 +157,7 @@ public class game_script : MonoBehaviour {
 		Debug.Log ("Clicked run");
 		StartCoroutine(Upload(userIdString, "logFocus")); //log code
 		
-		
-		//instructionsPanel.Choice ("Get focused by playing a game. Tap to jump, hold to jump higher.", cancelAction);
+		instructionsPanel.Choice ("Get focused by playing a game. Tap to jump, hold to jump higher.", cancelAction);
 		SceneManager.LoadScene ("EmielRunscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("EmielRunscene");
 		UIPanelObject.SetActive (false);
