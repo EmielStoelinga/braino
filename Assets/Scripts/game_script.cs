@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 
@@ -38,7 +38,7 @@ public class game_script : MonoBehaviour {
 	private Text recommendationText;
 
 	private float avgScore;
-	private string AIchoice = "0"; // 0 = no AI, 1 is AI
+	private int AIchoice = 0; // 0 = no AI, 1 is AI
 	private string userIdString = "4";
 
 	void Start () {
@@ -239,7 +239,7 @@ public class game_script : MonoBehaviour {
     }
 	
 	//kiest wel/niet AI voor user
-	Enumerator setAIVar(string user) {
+	IEnumerator setAIVar(string user) {
         WWWForm form = new WWWForm();
         form.AddField("user", user);
 		form.AddField("query", "initUser");
