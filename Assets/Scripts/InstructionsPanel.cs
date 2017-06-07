@@ -7,8 +7,10 @@ public class InstructionsPanel : MonoBehaviour {
 
 	public Text instruction;
 	public Image iconImage;
-	public Button okButton;
-	public GameObject instructionsPanelObject;
+	public Button button1;
+    public Button button2;
+    public Button button3;
+    public GameObject instructionsPanelObject;
 
 	private static InstructionsPanel instructionsPanel;
 
@@ -22,23 +24,29 @@ public class InstructionsPanel : MonoBehaviour {
 		return instructionsPanel;
 	}
 
-	public void Choice (string instruction, UnityAction okEvent) {
+	public void Choice (string instruction, string path, UnityAction event1, UnityAction event2, UnityAction event3) {
 		instructionsPanelObject.SetActive (true);
 
-		okButton.onClick.RemoveAllListeners();
-		okButton.onClick.AddListener (okEvent);
-		okButton.onClick.AddListener (ClosePanel);
+		button1.onClick.RemoveAllListeners();
+        button1.onClick.AddListener (event1);
+        button1.onClick.AddListener (ClosePanel);
 
-		this.instruction.text = instruction;
+        button2.onClick.RemoveAllListeners();
+        button2.onClick.AddListener(event2);
+        button2.onClick.AddListener(ClosePanel);
 
-		this.iconImage.gameObject.SetActive (false);
-		okButton.gameObject.SetActive (okEvent != null);
+        button3.onClick.RemoveAllListeners();
+        button3.onClick.AddListener(event3);
+        button3.onClick.AddListener(ClosePanel);
 
-		Time.timeScale = 0; //Pause the game
+        this.instruction.text = instruction;
+        byte[] data = Resources.Load<TextAsset>(path).bytes;
+        Texture2D tex = new Texture2D(1, 1);
+        tex.LoadImage(data);
+        this.iconImage.sprite = Sprite.Create(tex, new Rect(.0f, .0f, tex.width, tex.height), new Vector2(0.5f, 0.5f));
 	}
 
 	void ClosePanel () {
-		Time.timeScale = 1; //Resume the game
 		instructionsPanelObject.SetActive (false);
 	}
 }

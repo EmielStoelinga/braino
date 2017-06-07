@@ -2,18 +2,27 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class SharingAndroid : MonoBehaviour {
 
     public float reward;
-    public List<byte> images = new List<byte>();
+    public List<string> appearance;
+    public List<string> personal;
+    public List<string> social;
+    private string destination;
 
     private float score1;
     private float score2;
     private float score3;
     private float score4;
     private float avgScore;
+
+    private InstructionsPanel instructionsPanel;
+    private UnityAction appearanceAction;
+    private UnityAction personalAction;
+    private UnityAction socialAction;
 
     public void Start()
     {
@@ -65,7 +74,33 @@ public class SharingAndroid : MonoBehaviour {
         string destination = Path.Combine(Application.persistentDataPath, System.DateTime.Now.ToString("yyyy-MM-dd-HHmmss") + ".png");
         Debug.Log(destination);
         File.WriteAllBytes(destination, dataToSave);
-        shareImage("Braino", "Braino", "Good job!", destination);
+        instructionsPanel.Choice("Give somebody a compliment via social media!", avgScore.ToString(), appearanceAction, personalAction, socialAction);
+    }
+
+    void Awake()
+    {
+        instructionsPanel = InstructionsPanel.Instance();
+
+        appearanceAction = new UnityAction(AppearanceFunction);
+        personalAction = new UnityAction(PersonalFunction);
+        socialAction = new UnityAction(SocialFunction);
+    }
+
+    void AppearanceFunction()
+    {
+        shareImage("Braino", "Braino Compliment", appearance[Random.Range(0, appearance.Count)], destination);
+        GameObject.Find("Game").GetComponent<game_script>().Back(reward);
+    }
+
+    void PersonalFunction()
+    {
+        shareImage("Braino", "Braino Compliment", personal[Random.Range(0, appearance.Count)], destination);
+        GameObject.Find("Game").GetComponent<game_script>().Back(reward);
+    }
+
+    void SocialFunction()
+    {
+        shareImage("Braino", "Braino Compliment", social[Random.Range(0, appearance.Count)], destination);
         GameObject.Find("Game").GetComponent<game_script>().Back(reward);
     }
 

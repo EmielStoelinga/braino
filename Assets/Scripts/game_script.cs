@@ -29,8 +29,8 @@ public class game_script : MonoBehaviour {
 	private bool goBack = false;
 
 	private ModalPanel modalPanel;
-	private InstructionsPanel instructionsPanel;
-	public GameObject UIPanelObject;
+    private ModalPanel socialPanel;
+    public GameObject UIPanelObject;
 
 	private UnityAction backAction;
 	private UnityAction cancelAction;
@@ -73,9 +73,7 @@ public class game_script : MonoBehaviour {
 
 	void Awake () {
 		modalPanel = ModalPanel.Instance ();
-		instructionsPanel = InstructionsPanel.Instance ();
-
-		backAction = new UnityAction (BackFunction);
+        backAction = new UnityAction (BackFunction);
 		cancelAction = new UnityAction (CancelFunction);
 	}
 
@@ -156,7 +154,7 @@ public class game_script : MonoBehaviour {
 	void Puzzle () {
 		Debug.Log ("Clicked puzzle");
 
-		instructionsPanel.Choice ("Relax your brain and solve a puzzle. Move a tile by tapping on it.", cancelAction);
+        modalPanel.Choice ("Relax your brain and solve a puzzle. Move a tile by tapping on it.", cancelAction, null);
 		SceneManager.LoadScene ("Puzzlescene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Puzzlescene");
 		UIPanelObject.SetActive (false);
@@ -165,7 +163,7 @@ public class game_script : MonoBehaviour {
 	void RSI () {
 		Debug.Log ("Clicked RSI");
 
-		instructionsPanel.Choice ("Relax your brain and your body by doing some exercises. Follow the photo instructions.", cancelAction);
+        modalPanel.Choice ("Relax your brain and your body by doing some exercises. Follow the photo instructions.", cancelAction, null);
 		SceneManager.LoadScene ("RSIscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("RSIscene");
 		UIPanelObject.SetActive (false);
@@ -174,7 +172,7 @@ public class game_script : MonoBehaviour {
 	void Run () {
 		Debug.Log ("Clicked run");
 
-		instructionsPanel.Choice ("Get focused by playing a game. Tap to jump, hold to jump higher.", cancelAction);
+        modalPanel.Choice ("Get focused by playing a game. Tap to jump, hold to jump higher.", cancelAction, null);
 		SceneManager.LoadScene ("EmielRunscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("EmielRunscene");
 		UIPanelObject.SetActive (false);
@@ -183,8 +181,7 @@ public class game_script : MonoBehaviour {
 	void Social () {
 		Debug.Log ("Clicked social");
 
-		instructionsPanel.Choice ("Give somebody a compliment via social media!", cancelAction);
-		SceneManager.LoadScene ("Socialscene", LoadSceneMode.Additive);
+        SceneManager.LoadScene ("Socialscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Socialscene");
 		UIPanelObject.SetActive (false);
 	}
@@ -266,7 +263,7 @@ public class game_script : MonoBehaviour {
         LogScores();
     }
 
-	void BackFunction () {
+    void BackFunction () {
 		Back (0);
 	}
 
