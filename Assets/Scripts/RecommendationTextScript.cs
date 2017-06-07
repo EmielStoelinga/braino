@@ -15,7 +15,7 @@ public class RecommendationTextScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		text.text = "this is a recommendation this is a recommendation this is a recommendation";
+		//text.text = "this is a recommendation this is a recommendation this is a recommendation";
 
 		// insert here when to change the recommendation
 

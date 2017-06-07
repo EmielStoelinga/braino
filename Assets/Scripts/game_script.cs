@@ -35,6 +35,8 @@ public class game_script : MonoBehaviour {
 	private UnityAction backAction;
 	private UnityAction cancelAction;
 
+	private Text recommendationText;
+
 	private float avgScore;
 	
 	private string userIdString = "9999";
@@ -45,6 +47,8 @@ public class game_script : MonoBehaviour {
 		rsi.onClick.AddListener(RSI);
 		run.onClick.AddListener(Run);
 		social.onClick.AddListener(Social);
+
+		recommendationText = GameObject.Find ("RecommendationText").GetComponent<Text> ();
 
 		DontDestroyOnLoad (transform.gameObject);
 		active = SceneManager.GetSceneByName("test");
@@ -110,12 +114,25 @@ public class game_script : MonoBehaviour {
 	void Update () {
         CalculateScores();
         LogScores ();
+		CheckRecommendation ();
 
         if (Input.GetKeyDown("escape") && active != SceneManager.GetSceneByName("test"))
         {
             modalPanel.Choice("Do you want to stop?", backAction, cancelAction);
         }
     }
+
+	void CheckRecommendation () {
+		if (PlayerPrefs.HasKey ("recommendationTimestamp") && Time.time - PlayerPrefs.GetFloat ("recommendationTimestamp") > 60) {
+			// query for recommendation
+			StartCoroutine (UploadAI (userIdString));
+			PlayerPrefs.SetFloat ("recommendationTimestamp", Time.time);
+		} else if (!PlayerPrefs.HasKey ("recommendationTimestamp")) {
+			// query for first recommendation
+			StartCoroutine(UploadAI(userIdString)); //log code
+			PlayerPrefs.SetFloat("recommendationTimestamp", Time.time);
+		}
+	}
 
 	void UpdateBrainoImages() {
 		avgScore = (score1 + score2 + score3 + score4) / 4;
@@ -171,7 +188,7 @@ public class game_script : MonoBehaviour {
 		UIPanelObject.SetActive (false);
 	}
 	
-	IEnumerator Upload(string user, string activity, ) {
+	IEnumerator Upload(string user, string activity) {
         WWWForm form = new WWWForm();
         form.AddField("user", user);
 		form.AddField("query", activity);
@@ -199,20 +216,22 @@ public class game_script : MonoBehaviour {
  
         if(www.error != null) {
             Debug.Log(www.error);
+			recommendationText.text = "error";
         }
           else {
             Debug.Log("AI request complete!");
 			string suggestion = "Welcome back! Wanna play a game?";
-			if(www.type.equals("logFocus")){
+			if(www.text == "logFocus"){
 				suggestion = "Focus yourself with the running game!";
-			} else if (www.type.equals("logRSI")){
+			} else if (www.text == "logRSI"){
 				suggestion = "Prevent RSI, do some exercises with me!";
-			} else if (www.type.equals("logPuzzle")){
+			} else if (www.text == "logPuzzle"){
 				suggestion = "Relax while solving a fun puzzle!";
-			} else if (www.type.equals("logSocial")){
-				suggestion = "Did you already compliment someone today?"
+			} else if (www.text == "logSocial"){
+				suggestion = "Did you already compliment someone today?";
 			}
-			instructionsPanel.Choice (suggestion, cancelAction);
+			recommendationText.text = suggestion;
+			//instructionsPanel.Choice (suggestion, cancelAction);
         }
 		
 		
@@ -225,19 +244,19 @@ public class game_script : MonoBehaviour {
 
 		if (active == SceneManager.GetSceneByName("Puzzlescene")) {
 			score1 += score;
-			StartCoroutine(Upload(userIdString, "logPuzzle", score1, score2, score3, score4)); //log code
+			//StartCoroutine(Upload(userIdString, "logPuzzle", score1, score2, score3, score4)); //log code
 
 		} else if (active == SceneManager.GetSceneByName("RSIscene")) {
 			score2 += score;
-			StartCoroutine(Upload(userIdString, "logRSI", score1, score2, score3, score4)); //log code
+			//StartCoroutine(Upload(userIdString, "logRSI", score1, score2, score3, score4)); //log code
 
 		} else if (active == SceneManager.GetSceneByName("EmielRunscene")) {
 			score3 += score;
-			StartCoroutine(Upload(userIdString, "logFocus", score1, score2, score3, score4)); //log code
+			//StartCoroutine(Upload(userIdString, "logFocus", score1, score2, score3, score4)); //log code
 
 		} else if (active == SceneManager.GetSceneByName("Socialscene")) {
 			score4 += score;
-			StartCoroutine(Upload(userIdString, "logSocial", score1, score2, score3, score4)); //log code
+			//StartCoroutine(Upload(userIdString, "logSocial", score1, score2, score3, score4)); //log code
 
 		}
         LogScores();
