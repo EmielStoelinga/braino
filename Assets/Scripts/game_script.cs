@@ -39,10 +39,11 @@ public class game_script : MonoBehaviour {
 
 	private float avgScore;
 	
-	private string userIdString = "9999";
+	private string userIdString = "4";
 
 	void Start () {
 		//Screen.orientation = ScreenOrientation.Portrait;
+		PlayerPrefs.DeleteAll();
 		puzzle.onClick.AddListener(Puzzle);
 		rsi.onClick.AddListener(RSI);
 		run.onClick.AddListener(Run);
@@ -129,8 +130,11 @@ public class game_script : MonoBehaviour {
 			PlayerPrefs.SetFloat ("recommendationTimestamp", Time.time);
 		} else if (!PlayerPrefs.HasKey ("recommendationTimestamp")) {
 			// query for first recommendation
-			StartCoroutine(UploadAI(userIdString)); //log code
-			PlayerPrefs.SetFloat("recommendationTimestamp", Time.time);
+			StartCoroutine (UploadAI (userIdString)); //log code
+			PlayerPrefs.SetFloat ("recommendationTimestamp", Time.time);
+		} else if (recommendationText.text == "RECOMMENDATION") {
+			StartCoroutine (UploadAI (userIdString)); //log code
+			PlayerPrefs.SetFloat ("recommendationTimestamp", Time.time);
 		}
 	}
 
@@ -152,8 +156,7 @@ public class game_script : MonoBehaviour {
 
 	void Puzzle () {
 		Debug.Log ("Clicked puzzle");
-		StartCoroutine(Upload(userIdString, "logPuzzle")); //log code
-		
+
 		instructionsPanel.Choice ("Relax your brain and solve a puzzle. Move a tile by tapping on it.", cancelAction);
 		SceneManager.LoadScene ("Puzzlescene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Puzzlescene");
@@ -162,8 +165,7 @@ public class game_script : MonoBehaviour {
 
 	void RSI () {
 		Debug.Log ("Clicked RSI");
-		StartCoroutine(Upload(userIdString, "logRSI")); //log code
-		
+
 		instructionsPanel.Choice ("Relax your brain and your body by doing some exercises. Follow the photo instructions.", cancelAction);
 		SceneManager.LoadScene ("RSIscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("RSIscene");
@@ -171,7 +173,8 @@ public class game_script : MonoBehaviour {
 	}
 
 	void Run () {
-		Debug.Log ("Clicked run");		
+		Debug.Log ("Clicked run");
+
 		instructionsPanel.Choice ("Get focused by playing a game. Tap to jump, hold to jump higher.", cancelAction);
 		SceneManager.LoadScene ("EmielRunscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("EmielRunscene");
@@ -180,22 +183,21 @@ public class game_script : MonoBehaviour {
 
 	void Social () {
 		Debug.Log ("Clicked social");
-		StartCoroutine(Upload(userIdString, "logSocial")); //log code
-		
+
 		instructionsPanel.Choice ("Give somebody a compliment via social media!", cancelAction);
 		SceneManager.LoadScene ("Socialscene", LoadSceneMode.Additive);
 		active = SceneManager.GetSceneByName("Socialscene");
 		UIPanelObject.SetActive (false);
 	}
 	
-	IEnumerator Upload(string user, string activity, int s1, int s2, int s3, int s4 ) {
+	IEnumerator Upload(string user, string activity, float s1, float s2, float s3, float s4 ) {
         WWWForm form = new WWWForm();
         form.AddField("user", user);
 		form.AddField("query", activity);
-		form.AddField("s1", s1);
-		form.AddField("s2", s2);
-		form.AddField("s3", s3);
-		form.AddField("s4", s4); 
+		form.AddField("s1", (int) s1);
+		form.AddField("s2", (int) s2);
+		form.AddField("s3", (int) s3);
+		form.AddField("s4", (int) s4); 
  
 		WWW www = new WWW("http://eireenwestland.ruhosting.nl/braino/braino.php", form);
         yield return www;
@@ -220,20 +222,19 @@ public class game_script : MonoBehaviour {
  
         if(www.error != null) {
             Debug.Log(www.error);
-			recommendationText.text = "error";
-        }
-          else {
+        } else {
             Debug.Log("AI request complete!");
 			string suggestion = "Welcome back! Wanna play a game?";
-			if(www.text == ("logFocus")){
+			if(www.text == "logFocus"){
 				suggestion = "Focus yourself with the running game!";
-			} else if (www.text == ("logRSI")){
+			} else if (www.text == "logRSI"){
 				suggestion = "Prevent RSI, do some exercises with me!";
-			} else if (www.text == ("logPuzzle")){
+			} else if (www.text == "logPuzzle"){
 				suggestion = "Relax while solving a fun puzzle!";
-			} else if (www.text == ("logSocial")){
-				suggestion = "Did you already compliment someone today?"
+			} else if (www.text == "logSocial"){
+				suggestion = "Did you already compliment someone today?";
 			}
+				
 			recommendationText.text = suggestion;
 			//instructionsPanel.Choice (suggestion, cancelAction);
         }
@@ -248,19 +249,19 @@ public class game_script : MonoBehaviour {
 
 		if (active == SceneManager.GetSceneByName("Puzzlescene")) {
 			score1 += score;
-			//StartCoroutine(Upload(userIdString, "logPuzzle", score1, score2, score3, score4)); //log code
+			StartCoroutine(Upload(userIdString, "logPuzzle", score1, score2, score3, score4)); //log code
 
 		} else if (active == SceneManager.GetSceneByName("RSIscene")) {
 			score2 += score;
-			//StartCoroutine(Upload(userIdString, "logRSI", score1, score2, score3, score4)); //log code
+			StartCoroutine(Upload(userIdString, "logRSI", score1, score2, score3, score4)); //log code
 
 		} else if (active == SceneManager.GetSceneByName("EmielRunscene")) {
 			score3 += score;
-			//StartCoroutine(Upload(userIdString, "logFocus", score1, score2, score3, score4)); //log code
+			StartCoroutine(Upload(userIdString, "logFocus", score1, score2, score3, score4)); //log code
 
 		} else if (active == SceneManager.GetSceneByName("Socialscene")) {
 			score4 += score;
-			//StartCoroutine(Upload(userIdString, "logSocial", score1, score2, score3, score4)); //log code
+			StartCoroutine(Upload(userIdString, "logSocial", score1, score2, score3, score4)); //log code
 
 		}
         LogScores();
