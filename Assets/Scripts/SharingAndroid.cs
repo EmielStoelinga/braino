@@ -71,7 +71,7 @@ public class SharingAndroid : MonoBehaviour {
         }
 
         byte[] dataToSave = Resources.Load<TextAsset>(avgScore.ToString()).bytes;
-        string destination = Path.Combine(Application.persistentDataPath, System.DateTime.Now.ToString("yyyy-MM-dd-HHmmss") + ".png");
+        destination = Path.Combine(Application.persistentDataPath, System.DateTime.Now.ToString("yyyy-MM-dd-HHmmss") + ".png");
         Debug.Log(destination);
         File.WriteAllBytes(destination, dataToSave);
         instructionsPanel.Choice("Give somebody a compliment via social media!", avgScore.ToString(), appearanceAction, personalAction, socialAction);
