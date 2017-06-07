@@ -38,7 +38,7 @@ public class game_script : MonoBehaviour {
 	private Text recommendationText;
 
 	private float avgScore;
-	
+	private string AIchoice = "0"; // 0 = no AI, 1 is AI
 	private string userIdString = "4";
 
 	void Start () {
@@ -63,6 +63,7 @@ public class game_script : MonoBehaviour {
         } else {
             userIdString = Random.Range(0, 1000000).ToString();
             PlayerPrefs.SetString("userID", userIdString);
+			
             score1 = 50;
 		    score2 = 50;
 		    score3 = 50;
@@ -235,8 +236,31 @@ public class game_script : MonoBehaviour {
 			//instructionsPanel.Choice (suggestion, cancelAction);
         }
 		
+    }
+	
+	//kiest wel/niet AI voor user
+	Enumerator setAIVar(string user) {
+        WWWForm form = new WWWForm();
+        form.AddField("user", user);
+		form.AddField("query", "initUser");
+ 
+		WWW www = new WWW("http://eireenwestland.ruhosting.nl/braino/braino.php", form);
+        yield return www;
+ 
+        if(www.error != null) {
+            Debug.Log(www.error);
+        } else {
+            Debug.Log("AI choice request complete!");
+			
+			if(www.text == "1"){
+				AIchoice = 1;
+			}
+			
+        }
 		
     }
+	
+	
 	
 
 	public void Back (float score) {
