@@ -43,7 +43,6 @@ public class game_script : MonoBehaviour {
 
 	void Start () {
 		//Screen.orientation = ScreenOrientation.Portrait;
-		PlayerPrefs.DeleteAll();
 		puzzle.onClick.AddListener(Puzzle);
 		rsi.onClick.AddListener(RSI);
 		run.onClick.AddListener(Run);
