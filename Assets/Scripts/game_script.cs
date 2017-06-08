@@ -45,7 +45,7 @@ public class game_script : MonoBehaviour {
 	void Start () {
 		//Screen.orientation = ScreenOrientation.Portrait;
 		
-		PlayerPrefs.DeleteAll();
+		//PlayerPrefs.DeleteAll();
 		puzzle.onClick.AddListener(Puzzle);
 		rsi.onClick.AddListener(RSI);
 		run.onClick.AddListener(Run);
@@ -225,13 +225,13 @@ public class game_script : MonoBehaviour {
  
 		WWW www = new WWW("http://eireenwestland.ruhosting.nl/braino/braino.php", form);
         yield return www;
-//		string wwwtext = System.Text.Encoding.UTF8.GetString(www.bytes, 3, www.bytes.Length - 3);
+		
         if(www.error != null) {
             Debug.Log(www.error);
         } else {
             Debug.Log("AI request complete!");
 			string suggestion = www.text;// "Welcome back! Wanna play a game?";
-			if(www.text == "logFocus"){
+			/*if(wwwtext == "logFocus"){
 				suggestion = "Focus yourself with the running game!";
 			} else if (www.text == "logRSI"){
 				suggestion = "Prevent RSI, do some exercises with me!";
@@ -239,7 +239,7 @@ public class game_script : MonoBehaviour {
 				suggestion = "Relax while solving a fun puzzle!";
 			} else if (www.text == "logSocial"){
 				suggestion = "Did you already compliment someone today?";
-			}
+			}*/
 				
 			recommendationText.text = suggestion;
 			//instructionsPanel.Choice (suggestion, cancelAction);
