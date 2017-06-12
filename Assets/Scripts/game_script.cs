@@ -99,11 +99,16 @@ public class game_script : MonoBehaviour {
 		PlayerPrefs.SetFloat("score2", score2);
 		PlayerPrefs.SetFloat("score3", score3);
 		PlayerPrefs.SetFloat("score4", score4);
-		PlayerPrefs.SetFloat("timestamp", Time.time);
+
+		System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+		int cur_time = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
+		PlayerPrefs.SetInt ("timestamp", cur_time);
 	}
 
 	void CalculateScores() {
-		float elapsed_seconds = Time.time - PlayerPrefs.GetFloat("timestamp");
+		System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+		int cur_time = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
+		float elapsed_seconds = cur_time - PlayerPrefs.GetInt("timestamp");
 		score1 = PlayerPrefs.GetFloat("score1") - (elapsed_seconds / decreaseScoreAfterSeconds);
 		score2 = PlayerPrefs.GetFloat("score2") - (elapsed_seconds / decreaseScoreAfterSeconds);
 		score3 = PlayerPrefs.GetFloat("score3") - (elapsed_seconds / decreaseScoreAfterSeconds);
@@ -126,17 +131,19 @@ public class game_script : MonoBehaviour {
     }
 
 	void CheckRecommendation () {
-		if (PlayerPrefs.HasKey ("recommendationTimestamp") && Time.time - PlayerPrefs.GetFloat ("recommendationTimestamp") > 60) {
+		System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+		int cur_time = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
+		if (PlayerPrefs.HasKey ("recommendationTimestamp") && cur_time - PlayerPrefs.GetInt ("recommendationTimestamp") > 60) {
 			// query for recommendation
 			StartCoroutine (UploadAI (userIdString));
-			PlayerPrefs.SetFloat ("recommendationTimestamp", Time.time);
+			PlayerPrefs.SetInt ("recommendationTimestamp", cur_time);
 		} else if (!PlayerPrefs.HasKey ("recommendationTimestamp")) {
 			// query for first recommendation
 			StartCoroutine (UploadAI (userIdString)); //log code
-			PlayerPrefs.SetFloat ("recommendationTimestamp", Time.time);
+			PlayerPrefs.SetInt ("recommendationTimestamp", cur_time);
 		} else if (recommendationText.text == "RECOMMENDATION") {
 			StartCoroutine (UploadAI (userIdString)); //log code
-			PlayerPrefs.SetFloat ("recommendationTimestamp", Time.time);
+			PlayerPrefs.SetInt ("recommendationTimestamp", cur_time);
 		}
 	}
 
